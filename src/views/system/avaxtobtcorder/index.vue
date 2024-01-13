@@ -202,7 +202,7 @@
         </template>
       </el-table-column>
     </el-table>
-    
+
     <pagination
       v-show="total>0"
       :total="total"
@@ -266,7 +266,7 @@
 </template>
 
 <script>
-import { listOrder, getOrder, delOrder, addOrder, updateOrder } from "@/api/system/order";
+import { listOrder, getOrder, delOrder, addOrder, updateOrder } from "@/api/system/avaxtobtcorder";
 
 export default {
   name: "Order",
