@@ -168,11 +168,6 @@
     <el-table v-loading="loading" :data="btctoavaxorderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="冗余1" align="center" prop="extra1" />
-      <el-table-column label="冗余2" align="center" prop="extra2" />
-      <el-table-column label="冗余3" align="center" prop="extra3" />
-      <el-table-column label="冗余4" align="center" prop="extra4" />
-      <el-table-column label="冗余5" align="center" prop="extra5" />
       <el-table-column label="发起人地址" align="center" prop="btcAddress" />
       <el-table-column label="avax账户地址" align="center" prop="avaxAddress" />
       <el-table-column label="跨链金额" align="center" prop="transferAmount" />
@@ -183,6 +178,11 @@
       <el-table-column label="btc交易区块" align="center" prop="btcTransBlock" />
       <el-table-column label="btc交易hash" align="center" prop="btcTx" />
       <el-table-column label="跨链状态" align="center" prop="bridgeStatus" />
+      <el-table-column label="冗余1" align="center" prop="extra1" />
+      <el-table-column label="冗余2" align="center" prop="extra2" />
+      <el-table-column label="冗余3" align="center" prop="extra3" />
+      <el-table-column label="冗余4" align="center" prop="extra4" />
+      <el-table-column label="冗余5" align="center" prop="extra5" />
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -214,21 +214,6 @@
     <!-- 添加或修改btc跨链信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="冗余1" prop="extra1">
-          <el-input v-model="form.extra1" placeholder="请输入冗余1" />
-        </el-form-item>
-        <el-form-item label="冗余2" prop="extra2">
-          <el-input v-model="form.extra2" placeholder="请输入冗余2" />
-        </el-form-item>
-        <el-form-item label="冗余3" prop="extra3">
-          <el-input v-model="form.extra3" placeholder="请输入冗余3" />
-        </el-form-item>
-        <el-form-item label="冗余4" prop="extra4">
-          <el-input v-model="form.extra4" placeholder="请输入冗余4" />
-        </el-form-item>
-        <el-form-item label="冗余5" prop="extra5">
-          <el-input v-model="form.extra5" placeholder="请输入冗余5" />
-        </el-form-item>
         <el-form-item label="发起人地址" prop="btcAddress">
           <el-input v-model="form.btcAddress" placeholder="请输入发起人地址" />
         </el-form-item>
@@ -255,6 +240,21 @@
         </el-form-item>
         <el-form-item label="btc交易hash" prop="btcTx">
           <el-input v-model="form.btcTx" placeholder="请输入btc交易hash" />
+        </el-form-item>
+        <el-form-item label="冗余1" prop="extra1">
+          <el-input v-model="form.extra1" placeholder="请输入冗余1" />
+        </el-form-item>
+        <el-form-item label="冗余2" prop="extra2">
+          <el-input v-model="form.extra2" placeholder="请输入冗余2" />
+        </el-form-item>
+        <el-form-item label="冗余3" prop="extra3">
+          <el-input v-model="form.extra3" placeholder="请输入冗余3" />
+        </el-form-item>
+        <el-form-item label="冗余4" prop="extra4">
+          <el-input v-model="form.extra4" placeholder="请输入冗余4" />
+        </el-form-item>
+        <el-form-item label="冗余5" prop="extra5">
+          <el-input v-model="form.extra5" placeholder="请输入冗余5" />
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -334,6 +334,9 @@ export default {
       this.loading = true;
       listBtctoavaxorder(this.queryParams).then(response => {
         this.btctoavaxorderList = response.rows;
+        response.rows.forEach (row => {
+          row.avaxAddress = row.btcToAvaxAddress.avaxAddress
+        })
         this.total = response.total;
         this.loading = false;
       });
