@@ -3,7 +3,7 @@ import request from '@/utils/request'
 // 查询AvaxToBtcOrder列表
 export function listOrder(query) {
   return request({
-    url: '/system/order/list',
+    url: '/system/avaxtobtcorder/list',
     method: 'get',
     params: query
   })
@@ -12,7 +12,7 @@ export function listOrder(query) {
 // 查询AvaxToBtcOrder详细
 export function getOrder(id) {
   return request({
-    url: '/system/order/' + id,
+    url: '/system/avaxtobtcorder/' + id,
     method: 'get'
   })
 }
@@ -20,7 +20,7 @@ export function getOrder(id) {
 // 新增AvaxToBtcOrder
 export function addOrder(data) {
   return request({
-    url: '/system/order',
+    url: '/system/avaxtobtcorder',
     method: 'post',
     data: data
   })
@@ -29,7 +29,7 @@ export function addOrder(data) {
 // 修改AvaxToBtcOrder
 export function updateOrder(data) {
   return request({
-    url: '/system/order',
+    url: '/system/avaxtobtcorder',
     method: 'put',
     data: data
   })
@@ -38,7 +38,7 @@ export function updateOrder(data) {
 // 删除AvaxToBtcOrder
 export function delOrder(id) {
   return request({
-    url: '/system/order/' + id,
+    url: '/system/avaxtobtcorder/' + id,
     method: 'delete'
   })
 }

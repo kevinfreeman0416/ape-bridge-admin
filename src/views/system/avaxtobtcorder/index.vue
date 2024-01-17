@@ -423,7 +423,7 @@ export default {
     },
     /** 导出按钮操作 */
     handleExport() {
-      this.download('system/order/export', {
+      this.download('system/avaxtobtcorder/export', {
         ...this.queryParams
       }, `order_${new Date().getTime()}.xlsx`)
     }
