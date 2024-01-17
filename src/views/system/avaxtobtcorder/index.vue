@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="冗余1" prop="extra1">
+      <!-- <el-form-item label="冗余1" prop="extra1">
         <el-input
           v-model="queryParams.extra1"
           placeholder="请输入冗余1"
@@ -40,7 +40,7 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="avax地址" prop="avaxAddr">
         <el-input
           v-model="queryParams.avaxAddr"
@@ -120,7 +120,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -151,7 +151,7 @@
           @click="handleDelete"
           v-hasPermi="['system:order:remove']"
         >删除</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -168,21 +168,77 @@
     <el-table v-loading="loading" :data="orderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="冗余1" align="center" prop="extra1" />
+      <!-- <el-table-column label="冗余1" align="center" prop="extra1" />
       <el-table-column label="冗余2" align="center" prop="extra2" />
       <el-table-column label="冗余3" align="center" prop="extra3" />
       <el-table-column label="冗余4" align="center" prop="extra4" />
-      <el-table-column label="冗余5" align="center" prop="extra5" />
-      <el-table-column label="avax地址" align="center" prop="avaxAddr" />
-      <el-table-column label="锁仓金额" align="center" prop="lockAmount" />
-      <el-table-column label="服务费" align="center" prop="serviceFee" />
-      <el-table-column label="实收金额" align="center" prop="actualAmountReceived" />
-      <el-table-column label="跨链状态" align="center" prop="status" />
+      <el-table-column label="冗余5" align="center" prop="extra5" /> -->
+      <el-table-column label="avax地址" width="120" align="center" prop="avaxAddr">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.avaxAddr)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.avaxAddr)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="锁仓金额" align="center" prop="lockAmount" >
+        <template slot-scope="scope">
+          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.lockAmount)+'') }}</span> -->
+          <span>{{  scope.row.lockAmount}}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="服务费" align="center" prop="serviceFee" >
+        <template slot-scope="scope">
+          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.serviceFee)+'') }}</span> -->
+          <span>{{  scope.row.serviceFee }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="实收金额" align="center" prop="actualAmountReceived">
+        <template slot-scope="scope">
+          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.actualAmountReceived)+'') }}</span> -->
+          <span>{{  scope.row.actualAmountReceived }}</span>
+        </template>
+      </el-table-column>
+      <el-table-column label="跨链状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_bridge_status" :value="scope.row.bridgeStatus"/>
+        </template>
+      </el-table-column>
       <el-table-column label="avax交易区块" align="center" prop="avaxTransBlock" />
-      <el-table-column label="avax交易hash" align="center" prop="avaxTx" />
+      <el-table-column label="avax交易hash" align="center" prop="avaxTx" >
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.avaxTx)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.avaxTx)" alt="">
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="btc交易区块" align="center" prop="btcTransBlock" />
-      <el-table-column label="btc交易hash" align="center" prop="btcTx" />
-      <el-table-column label="btc链接收地址" align="center" prop="reciveBtcAddr" />
+      <el-table-column label="btc交易hash" align="center" prop="btcTx" >
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.btcTx)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.btcTx)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="btc链接收地址" width="120" align="center" prop="reciveBtcAddr">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.reciveBtcAddr)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.reciveBtcAddr)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="跨链状态" align="center" prop="status">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_bridge_status" :value="scope.row.status"/>
+        </template>
+      </el-table-column>
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -190,15 +246,15 @@
             type="text"
             icon="el-icon-edit"
             @click="handleUpdate(scope.row)"
-            v-hasPermi="['system:order:edit']"
+            
           >修改</el-button>
-          <el-button
+          <!-- <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:order:remove']"
-          >删除</el-button>
+          >删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -214,7 +270,7 @@
     <!-- 添加或修改AvaxToBtcOrder对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="冗余1" prop="extra1">
+        <!-- <el-form-item label="冗余1" prop="extra1">
           <el-input v-model="form.extra1" placeholder="请输入冗余1" />
         </el-form-item>
         <el-form-item label="冗余2" prop="extra2">
@@ -228,7 +284,7 @@
         </el-form-item>
         <el-form-item label="冗余5" prop="extra5">
           <el-input v-model="form.extra5" placeholder="请输入冗余5" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="avax地址" prop="avaxAddr">
           <el-input v-model="form.avaxAddr" placeholder="请输入avax地址" />
         </el-form-item>
@@ -256,6 +312,16 @@
         <el-form-item label="btc链接收地址" prop="reciveBtcAddr">
           <el-input v-model="form.reciveBtcAddr" placeholder="请输入btc链接收地址" />
         </el-form-item>
+        <el-form-item label="跨链状态" prop="status">
+          <el-select v-model="form.status" placeholder="请选择跨链状态">
+            <el-option
+              v-for="dict in dict.type.sys_bridge_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
+        </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -270,6 +336,7 @@ import { listOrder, getOrder, delOrder, addOrder, updateOrder } from "@/api/syst
 
 export default {
   name: "Order",
+  dicts: ['sys_bridge_status'],
   data() {
     return {
       // 遮罩层

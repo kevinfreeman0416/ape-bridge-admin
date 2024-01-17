@@ -1,7 +1,7 @@
 <template>
   <div class="app-container">
     <el-form :model="queryParams" ref="queryForm" size="small" :inline="true" v-show="showSearch" label-width="68px">
-      <el-form-item label="冗余1" prop="extra1">
+      <!-- <el-form-item label="冗余1" prop="extra1">
         <el-input
           v-model="queryParams.extra1"
           placeholder="请输入冗余1"
@@ -40,7 +40,7 @@
           clearable
           @keyup.enter.native="handleQuery"
         />
-      </el-form-item>
+      </el-form-item> -->
       <el-form-item label="发起人地址" prop="btcAddress">
         <el-input
           v-model="queryParams.btcAddress"
@@ -120,7 +120,7 @@
     </el-form>
 
     <el-row :gutter="10" class="mb8">
-      <el-col :span="1.5">
+      <!-- <el-col :span="1.5">
         <el-button
           type="primary"
           plain
@@ -151,7 +151,7 @@
           @click="handleDelete"
           v-hasPermi="['system:btctoavaxorder:remove']"
         >删除</el-button>
-      </el-col>
+      </el-col> -->
       <el-col :span="1.5">
         <el-button
           type="warning"
@@ -168,21 +168,64 @@
     <el-table v-loading="loading" :data="btctoavaxorderList" @selection-change="handleSelectionChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="ID" align="center" prop="id" />
-      <el-table-column label="发起人地址" align="center" prop="btcAddress" />
-      <el-table-column label="avax账户地址" align="center" prop="avaxAddress" />
-      <el-table-column label="跨链金额" align="center" prop="transferAmount" />
+      <el-table-column label="发起人地址" width="120" align="center" prop="btcAddress">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.btcAddress)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.btcAddress)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="avax账户地址" width="120" align="center" prop="avaxAddress">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.avaxAddress)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.avaxAddress)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="跨链金额" align="center" prop="transferAmount">
+        <template slot-scope="scope">
+          <div>
+            <!-- {{ $common.weiToDecimal(scope.row.amountStr) }} -->
+            {{ $common.weiToDecimal($common.toolNumber(scope.row.transferAmount)+'')  }}
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="跨链手续费" align="center" prop="handlingFee" />
       <el-table-column label="实际转账金额" align="center" prop="actualTransferAmount" />
       <el-table-column label="avax交易区块" align="center" prop="avaxTransBlock" />
-      <el-table-column label="avax交易hash" align="center" prop="avaxTx" />
+      <el-table-column label="avax交易hash" width="120" align="center" prop="avaxTx">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.avaxTx)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.avaxTx)" alt="">
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="btc交易区块" align="center" prop="btcTransBlock" />
-      <el-table-column label="btc交易hash" align="center" prop="btcTx" />
-      <el-table-column label="跨链状态" align="center" prop="bridgeStatus" />
-      <el-table-column label="冗余1" align="center" prop="extra1" />
+      <el-table-column label="btc交易hash" width="120" align="center" prop="btcTx">
+        <template slot-scope="scope">
+          <div style="display: flex;align-items: center;">
+            <p>{{ $common.getUserShowAddress(scope.row.btcTx)}}</p>
+            <img style="width: 20px;height: auto;cursor: pointer;margin-left: 5px;" 
+            src="../../../assets/images/copy.png" @click="copy(scope.row.btcTx)" alt="">
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="跨链状态" align="center" prop="bridgeStatus">
+        <template slot-scope="scope">
+          <dict-tag :options="dict.type.sys_bridge_status" :value="scope.row.bridgeStatus"/>
+        </template>
+      </el-table-column>
+      <!-- <el-table-column label="冗余1" align="center" prop="extra1" />
       <el-table-column label="冗余2" align="center" prop="extra2" />
       <el-table-column label="冗余3" align="center" prop="extra3" />
       <el-table-column label="冗余4" align="center" prop="extra4" />
-      <el-table-column label="冗余5" align="center" prop="extra5" />
+      <el-table-column label="冗余5" align="center" prop="extra5" /> -->
       <el-table-column label="操作" align="center" class-name="small-padding fixed-width">
         <template slot-scope="scope">
           <el-button
@@ -192,13 +235,13 @@
             @click="handleUpdate(scope.row)"
             v-hasPermi="['system:btctoavaxorder:edit']"
           >修改</el-button>
-          <el-button
+          <!-- <el-button
             size="mini"
             type="text"
             icon="el-icon-delete"
             @click="handleDelete(scope.row)"
             v-hasPermi="['system:btctoavaxorder:remove']"
-          >删除</el-button>
+          >删除</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -215,33 +258,43 @@
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
         <el-form-item label="发起人地址" prop="btcAddress">
-          <el-input v-model="form.btcAddress" placeholder="请输入发起人地址" />
+          <el-input v-model="form.btcAddress" disabled placeholder="请输入发起人地址" />
         </el-form-item>
         <el-form-item label="avax账户地址" prop="avaxAddress">
-          <el-input v-model="form.avaxAddress" placeholder="请输入avax账户地址" />
+          <el-input v-model="form.avaxAddress"  placeholder="请输入avax账户地址" />
         </el-form-item>
         <el-form-item label="跨链金额" prop="transferAmount">
-          <el-input v-model="form.transferAmount" placeholder="请输入跨链金额" />
+          <el-input v-model="form.transferAmount" disabled placeholder="请输入跨链金额" />
         </el-form-item>
         <el-form-item label="跨链手续费" prop="handlingFee">
-          <el-input v-model="form.handlingFee" placeholder="请输入跨链手续费" />
+          <el-input v-model="form.handlingFee"  placeholder="请输入跨链手续费" />
         </el-form-item>
         <el-form-item label="实际转账金额" prop="actualTransferAmount">
-          <el-input v-model="form.actualTransferAmount" placeholder="请输入实际转账金额" />
+          <el-input v-model="form.actualTransferAmount" disabled placeholder="请输入实际转账金额" />
         </el-form-item>
         <el-form-item label="avax交易区块" prop="avaxTransBlock">
-          <el-input v-model="form.avaxTransBlock" placeholder="请输入avax交易区块" />
+          <el-input v-model="form.avaxTransBlock" disabled placeholder="请输入avax交易区块" />
         </el-form-item>
         <el-form-item label="avax交易hash" prop="avaxTx">
-          <el-input v-model="form.avaxTx" placeholder="请输入avax交易hash" />
+          <el-input v-model="form.avaxTx" disabled placeholder="请输入avax交易hash" />
         </el-form-item>
         <el-form-item label="btc交易区块" prop="btcTransBlock">
-          <el-input v-model="form.btcTransBlock" placeholder="请输入btc交易区块" />
+          <el-input v-model="form.btcTransBlock" disabled placeholder="请输入btc交易区块" />
         </el-form-item>
         <el-form-item label="btc交易hash" prop="btcTx">
-          <el-input v-model="form.btcTx" placeholder="请输入btc交易hash" />
+          <el-input v-model="form.btcTx" disabled placeholder="请输入btc交易hash" />
         </el-form-item>
-        <el-form-item label="冗余1" prop="extra1">
+        <el-form-item label="跨链状态" prop="bridgeStatus">
+          <el-select v-model="form.bridgeStatus" placeholder="请选择跨链状态">
+            <el-option
+              v-for="dict in dict.type.sys_bridge_status"
+              :key="dict.value"
+              :label="dict.label"
+              :value="parseInt(dict.value)"
+            ></el-option>
+          </el-select>
+        </el-form-item>
+        <!-- <el-form-item label="冗余1" prop="extra1">
           <el-input v-model="form.extra1" placeholder="请输入冗余1" />
         </el-form-item>
         <el-form-item label="冗余2" prop="extra2">
@@ -255,7 +308,7 @@
         </el-form-item>
         <el-form-item label="冗余5" prop="extra5">
           <el-input v-model="form.extra5" placeholder="请输入冗余5" />
-        </el-form-item>
+        </el-form-item> -->
       </el-form>
       <div slot="footer" class="dialog-footer">
         <el-button type="primary" @click="submitForm">确 定</el-button>
@@ -270,6 +323,7 @@ import { listBtctoavaxorder, getBtctoavaxorder, delBtctoavaxorder, addBtctoavaxo
 
 export default {
   name: "Btctoavaxorder",
+  dicts: ['sys_bridge_status'],
   data() {
     return {
       // 遮罩层
@@ -294,11 +348,11 @@ export default {
       queryParams: {
         pageNum: 1,
         pageSize: 10,
-        extra1: null,
-        extra2: null,
-        extra3: null,
-        extra4: null,
-        extra5: null,
+        // extra1: null,
+        // extra2: null,
+        // extra3: null,
+        // extra4: null,
+        // extra5: null,
         btcAddress: null,
         avaxAddress: null,
         transferAmount: null,
@@ -333,10 +387,12 @@ export default {
     getList() {
       this.loading = true;
       listBtctoavaxorder(this.queryParams).then(response => {
+        console.log(response)
         this.btctoavaxorderList = response.rows;
-        response.rows.forEach (row => {
-          row.avaxAddress = row.btcToAvaxAddress.avaxAddress
-        })
+        // response.rows.forEach (row => {
+        //   console.log('row',row)
+        //   row.avaxAddress = row.btcToAvaxAddress.avaxAddress
+        // })
         this.total = response.total;
         this.loading = false;
       });
@@ -421,6 +477,19 @@ export default {
           }
         }
       });
+    },
+    //复制按钮
+    copy(e){
+      let that = this
+      this.$copyText(e).then(function (e) {
+          that.$message({
+            message: '复制成功',
+            type: 'success'
+          });
+      }, function (e) {
+        that.$message.error('复制失败');
+          
+      })
     },
     /** 删除按钮操作 */
     handleDelete(row) {
