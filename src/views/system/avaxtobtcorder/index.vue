@@ -285,7 +285,7 @@
         <el-form-item label="冗余5" prop="extra5">
           <el-input v-model="form.extra5" placeholder="请输入冗余5" />
         </el-form-item> -->
-        <el-form-item label="avax地址" prop="avaxAddr">
+        <!-- <el-form-item label="avax地址" prop="avaxAddr">
           <el-input v-model="form.avaxAddr" placeholder="请输入avax地址" />
         </el-form-item>
         <el-form-item label="锁仓金额" prop="lockAmount">
@@ -311,7 +311,7 @@
         </el-form-item>
         <el-form-item label="btc链接收地址" prop="reciveBtcAddr">
           <el-input v-model="form.reciveBtcAddr" placeholder="请输入btc链接收地址" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="跨链状态" prop="status">
           <el-select v-model="form.status" placeholder="请选择跨链状态">
             <el-option

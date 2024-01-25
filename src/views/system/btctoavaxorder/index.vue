@@ -257,17 +257,17 @@
     <!-- 添加或修改btc跨链信息对话框 -->
     <el-dialog :title="title" :visible.sync="open" width="500px" append-to-body>
       <el-form ref="form" :model="form" :rules="rules" label-width="80px">
-        <el-form-item label="发起人地址" prop="btcAddress">
+        <!-- <el-form-item label="发起人地址" prop="btcAddress">
           <el-input v-model="form.btcAddress" disabled placeholder="请输入发起人地址" />
         </el-form-item>
         <el-form-item label="avax账户地址" prop="avaxAddress">
-          <el-input v-model="form.avaxAddress"  placeholder="请输入avax账户地址" />
+          <el-input v-model="form.avaxAddress" disabled  placeholder="请输入avax账户地址" />
         </el-form-item>
         <el-form-item label="跨链金额" prop="transferAmount">
           <el-input v-model="form.transferAmount" disabled placeholder="请输入跨链金额" />
         </el-form-item>
         <el-form-item label="跨链手续费" prop="handlingFee">
-          <el-input v-model="form.handlingFee"  placeholder="请输入跨链手续费" />
+          <el-input v-model="form.handlingFee" disabled  placeholder="请输入跨链手续费" />
         </el-form-item>
         <el-form-item label="实际转账金额" prop="actualTransferAmount">
           <el-input v-model="form.actualTransferAmount" disabled placeholder="请输入实际转账金额" />
@@ -283,7 +283,7 @@
         </el-form-item>
         <el-form-item label="btc交易hash" prop="btcTx">
           <el-input v-model="form.btcTx" disabled placeholder="请输入btc交易hash" />
-        </el-form-item>
+        </el-form-item> -->
         <el-form-item label="跨链状态" prop="bridgeStatus">
           <el-select v-model="form.bridgeStatus" placeholder="请选择跨链状态">
             <el-option
