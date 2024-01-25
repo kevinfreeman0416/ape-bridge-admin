@@ -190,7 +190,7 @@
         <template slot-scope="scope">
           <div>
             <!-- {{ $common.weiToDecimal(scope.row.amountStr) }} -->
-            {{ $common.weiToDecimal($common.toolNumber(scope.row.transferAmount)+'')  }}
+            {{ scope.row.transferAmount  }}
           </div>
         </template>
       </el-table-column>
