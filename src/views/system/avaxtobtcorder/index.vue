@@ -184,28 +184,25 @@
       </el-table-column>
       <el-table-column label="锁仓金额" align="center" prop="lockAmount" >
         <template slot-scope="scope">
-          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.lockAmount)+'') }}</span> -->
-          <span>{{  scope.row.lockAmount}}</span>
+          <span>{{  $common.weiToDecimal(scope.row.lockAmount)}} APEA</span>
         </template>
       </el-table-column>
       <el-table-column label="服务费" align="center" prop="serviceFee" >
         <template slot-scope="scope">
-          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.serviceFee)+'') }}</span> -->
-          <span>{{  scope.row.serviceFee }}</span>
+          <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.serviceFee)) }} APEA</span>
         </template>
       </el-table-column>
       <el-table-column label="实收金额" align="center" prop="actualAmountReceived">
         <template slot-scope="scope">
-          <!-- <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.actualAmountReceived)+'') }}</span> -->
-          <span>{{  scope.row.actualAmountReceived }}</span>
+          <span>{{  $common.weiToDecimal($common.toolNumber(scope.row.actualAmountReceived)) }} APEA</span>
         </template>
       </el-table-column>
-      <el-table-column label="跨链状态" align="center" prop="status">
+      <!-- <el-table-column label="跨链状态" align="center" prop="status">
         <template slot-scope="scope">
           <dict-tag :options="dict.type.sys_bridge_status" :value="scope.row.bridgeStatus"/>
         </template>
-      </el-table-column>
-      <el-table-column label="avax交易区块" align="center" prop="avaxTransBlock" />
+      </el-table-column> -->
+      <!-- <el-table-column label="avax交易区块" align="center" prop="avaxTransBlock" /> -->
       <el-table-column label="avax交易hash" align="center" prop="avaxTx" >
         <template slot-scope="scope">
           <div style="display: flex;align-items: center;">
@@ -215,8 +212,8 @@
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="btc交易区块" align="center" prop="btcTransBlock" />
-      <el-table-column label="btc交易hash" align="center" prop="btcTx" >
+      <!-- <el-table-column label="btc交易区块" align="center" prop="btcTransBlock" /> -->
+      <!-- <el-table-column label="btc交易hash" align="center" prop="btcTx" >
         <template slot-scope="scope">
           <div style="display: flex;align-items: center;">
             <p>{{ $common.getUserShowAddress(scope.row.btcTx)}}</p>
@@ -224,7 +221,7 @@
             src="../../../assets/images/copy.png" @click="copy(scope.row.btcTx)" alt="">
           </div>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column label="btc链接收地址" width="120" align="center" prop="reciveBtcAddr">
         <template slot-scope="scope">
           <div style="display: flex;align-items: center;">

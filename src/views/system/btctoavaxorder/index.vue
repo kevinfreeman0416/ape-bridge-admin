@@ -189,13 +189,24 @@
       <el-table-column label="跨链金额" align="center" prop="transferAmount">
         <template slot-scope="scope">
           <div>
-            <!-- {{ $common.weiToDecimal(scope.row.amountStr) }} -->
-            {{ scope.row.transferAmount  }}
+            {{ $common.weiToDecimal(scope.row.transferAmount)  }} APEA
           </div>
         </template>
       </el-table-column>
-      <el-table-column label="跨链手续费" align="center" prop="handlingFee" />
-      <el-table-column label="实际转账金额" align="center" prop="actualTransferAmount" />
+      <el-table-column label="跨链手续费" align="center" prop="handlingFee" >
+        <template slot-scope="scope">
+          <div>
+            {{ $common.weiToDecimal(scope.row.handlingFee)  }} APEA
+          </div>
+        </template>
+      </el-table-column>
+      <el-table-column label="实际转账金额" align="center" prop="actualTransferAmount">
+        <template slot-scope="scope">
+          <div>
+            {{ $common.weiToDecimal($common.toolNumber(scope.row.actualTransferAmount))  }} APEA
+          </div>
+        </template>
+      </el-table-column>
       <el-table-column label="avax交易区块" align="center" prop="avaxTransBlock" />
       <el-table-column label="avax交易hash" width="120" align="center" prop="avaxTx">
         <template slot-scope="scope">
